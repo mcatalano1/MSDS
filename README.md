@@ -2,4 +2,4 @@
 
 This repository is for MSDS homework.
 
-Recent College Data comes from fivethirtyeight
+Recent College Grad Data comes from fivethirtyeight
