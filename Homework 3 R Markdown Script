@@ -1,0 +1,71 @@
+---
+title: "MCatalano_Homework3"
+author: "Michael Catalano"
+date: "9/13/2018"
+output: html_document
+---
+
+##Question 1: GitHub Cloning 
+###The following lists whats in my current directiory, creates a new directory, navigates to it, and clones a Github repository
+
+ls -l
+
+mkdir Trial
+
+cd Trial/
+
+pwd
+
+git clone https://github.com/awesomedata/awesome-public-datasets.git
+
+##Question 2: Data Summary
+```{r}
+df <- read.csv("/Users/MikeCatalano/Desktop/Doing Data Science/RepoTest/titanic.csv")
+titanic <- data.frame(df$PassengerId, df$Survived, df$Sex, df$Fare)
+#Count by Sex
+countMale <- length(which(titanic$df.Sex=="male"))
+countFemale <- length(which(titanic$df.Sex=="female"))
+CountsbySex <- c(Male=countMale,Female=countFemale)
+CountsbySex
+#Plot by Sex
+barplot(table(titanic$df.Sex) , xlab = "Sex", ylab = "Count", main = "Titanic Distribution of Males and Females")
+```
+
+##Question 3: Function Building 
+```{r}
+sleepdata <- read.csv("/Users/MikeCatalano/Desktop/Doing Data Science/RepoTest/sleep_data_01.csv")
+NewFunction <- function(x){
+  MedianAge <- median(sleepdata$Age, na.rm=TRUE)
+  meanRSES <- mean(sleepdata$RSES, na.rm=TRUE)
+  sdRSES <- sd(sleepdata$RSES, na.rm=TRUE)/5
+  rangeDur <- max(sleepdata$Duration, na.rm=TRUE)-min(sleepdata$Duration, na.rm=TRUE)
+  report <- data.frame(MedianAge, SelfEsteem=meanRSES,SE_SD=(sdRSES), DurationRange=rangeDur)
+  round(report, digits = 2)
+}
+NewFunction()
+```
+
+##Question 4: FiveThirtyEight Data 
+```{r}
+library(fivethirtyeight)
+data(college_recent_grads)
+df <- data.frame(college_recent_grads)
+## Related News Story: https://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/
+## Dimensions and column names 
+str(df)
+```
+
+##Question 5: Data Summary 
+```{r}
+colnames(df)
+## Number of columns 
+ncol(df)
+library(plyr)
+library(data.table)
+major_count <- count(df$major_category)
+setnames(major_count, "x", "Category")
+counts <- table(df$major_category)
+barplot(counts, main="Major Category Frequency", las=1, horiz=TRUE, xlab="Freq", ylab = "Category", col = rgb(0.5,0.1,0.6,0.6))
+#Write out CSV file to currend working directory
+write.table(df, file = "/Users/MikeCatalano/Desktop/Doing Data Science/RepoTest/538_College_Recent_Grads.csv", row.names = FALSE)
+```
